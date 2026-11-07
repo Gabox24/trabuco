@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trabuco Gaitero</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: cartel de show nocturno. Portada con la foto en vivo que se funde al negro, logo encima, titular grande, contacto, videos y redes en mosaico. Un solo momento de movimiento: el ecualizador de "En vivo". */
+:root {
+  --bg: #08080c;
+  --surface: #14141b;
+  --surface-2: #1c1c26;
+  --fg: #f6f3ec;
+  --muted: #a6a6b4;
+  --line: #2a2a36;
+  --yellow: #f6c62a;
+  --blue: #2a5bff;
+  --red: #e5303f;
+  --ink: #15110a;
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background:
+    radial-gradient(520px 380px at 12% 0%, rgba(42,91,255,.22), transparent 70%),
+    radial-gradient(520px 380px at 92% 8%, rgba(229,48,63,.18), transparent 70%),
+    radial-gradient(600px 300px at 50% 0%, rgba(246,198,42,.14), transparent 70%),
+    var(--bg);
+  background-repeat: no-repeat;
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-block: 16px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; border-radius: 12px; }
+.wrap { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+
+/* Portada */
+.hero { position: relative; isolation: isolate; border-radius: 28px 28px 0 0; overflow: hidden; background: var(--surface);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%); }
+.hero img.photo { display: block; width: 100%; max-width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: center 35%; }
+.hero img.slide { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: center 35%; opacity: 0; transition: opacity .9s ease; }
+.hero img.slide.on { opacity: 1; }
+.hero::after { content: ""; z-index: 2; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(8,8,12,.35) 0%, rgba(8,8,12,0) 28%, rgba(8,8,12,.55) 70%, var(--bg) 100%); pointer-events: none; }
+.live {
+  position: absolute; top: 16px; left: 16px; z-index: 3;
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(8,8,12,.72); border: 1px solid rgba(255,255,255,.14);
+  padding: 8px 14px 8px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+}
+.eq { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
+.eq i { width: 3px; height: 100%; border-radius: 2px; transform-origin: bottom; animation: bounce 1s ease-in-out infinite; }
+.eq i:nth-child(1) { background: var(--yellow); animation-delay: -.2s; }
+.eq i:nth-child(2) { background: var(--blue); animation-delay: -.6s; }
+.eq i:nth-child(3) { background: var(--red); animation-delay: -.4s; }
+.eq i:nth-child(4) { background: var(--yellow); animation-delay: -.8s; }
+.eq i:nth-child(5) { background: var(--blue); animation-delay: -.1s; }
+@keyframes bounce { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+.id { position: relative; z-index: 2; margin-top: -92px; display: flex; flex-direction: column; align-items: center; text-align: center; padding-inline: 12px; }
+.logo { width: 112px; height: 112px; border-radius: 50%; display: block; background: #000; box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--yellow), 0 12px 40px rgba(246,198,42,.28); }
+.kind { margin: 18px 0 0; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+h1 { margin: 2px 0 0; font-family: var(--font-display); font-weight: 900; text-transform: uppercase; line-height: .88; font-size: clamp(60px, 19vw, 88px); letter-spacing: .01em; display: flex; flex-direction: column; }
+h1 span:last-child { color: var(--yellow); }
+.tag { margin: 16px 0 0; font-family: var(--font-display); font-weight: 800; font-size: 25px; line-height: 1.1; text-transform: uppercase; letter-spacing: .03em; text-wrap: balance; }
+.sub { margin: 8px 0 0; color: var(--muted); max-width: 34ch; text-wrap: balance; }
+.stripe { display: flex; width: 120px; height: 5px; border-radius: 3px; overflow: hidden; margin-top: 22px; }
+.stripe i { flex: 1; }
+.stripe i:nth-child(1) { background: var(--yellow); }
+.stripe i:nth-child(2) { background: var(--blue); }
+.stripe i:nth-child(3) { background: var(--red); }
+
+/* Contacto */
+.contact { display: flex; flex-direction: column; gap: 10px; }
+.cta {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: var(--yellow); color: var(--ink);
+  font-weight: 600; font-size: 18px; padding: 18px 20px; border-radius: 18px;
+  box-shadow: 0 10px 34px rgba(246,198,42,.26);
+  transition: transform .15s ease;
+}
+.cta:hover { transform: translateY(-2px); }
+.number {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 10px 10px 10px 18px;
+}
+.number span { font-variant-numeric: tabular-nums; user-select: all; font-weight: 500; letter-spacing: .02em; min-width: 0; overflow-wrap: anywhere; }
+.copy { font: inherit; font-size: 14px; font-weight: 600; background: var(--surface-2); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; padding: 9px 16px; cursor: pointer; flex: none; }
+
+/* Secciones */
+h2 { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: .12em; text-transform: uppercase; }
+h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+.videos { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; transition: border-color .15s ease; }
+.videos:hover { border-color: var(--red); }
+.play { width: 52px; height: 52px; border-radius: 50%; background: var(--red); display: grid; place-items: center; flex: none; }
+.play svg { width: 22px; height: 22px; fill: #fff; margin-left: 3px; }
+.videos .t { display: flex; flex-direction: column; min-width: 0; }
+.videos .t b { font-size: 17px; font-weight: 600; }
+.videos .t small { color: var(--muted); font-size: 14px; }
+.videos .go { margin-left: auto; color: var(--muted); font-size: 20px; flex: none; }
+
+.handle { margin: -4px 0 14px; color: var(--muted); }
+.handle b { color: var(--fg); font-weight: 600; }
+.socials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.social { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 8px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; font-weight: 600; font-size: 15px; transition: transform .15s ease, border-color .15s ease; }
+.social:hover { transform: translateY(-3px); }
+.chip { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 900; font-size: 22px; letter-spacing: .03em; color: #fff; }
+.chip-img { width: 52px; height: 52px; border-radius: 16px; display: block; object-fit: cover; }
+.ig .chip { background: linear-gradient(135deg, #f6c62a, #e5303f 55%, #b02a9a); }
+.tt .chip { background: #000; box-shadow: inset 0 0 0 2px #2a2a36, 3px 0 0 -1px rgba(42,230,255,.7), -3px 0 0 -1px rgba(229,48,63,.7); }
+.fb .chip { background: var(--blue); }
+.ig:hover { border-color: var(--yellow); }
+.tt:hover { border-color: var(--fg); }
+.fb:hover { border-color: var(--blue); }
+
+footer { text-align: center; color: var(--muted); font-size: 13px; letter-spacing: .06em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eq i { animation: none; transform: scaleY(.7); }
+  .cta, .social, .hero img.slide { transition: none; }
+  .cta:hover, .social:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+<!--
+  CÓMO EDITAR ESTA PÁGINA (busca estos textos con Ctrl+F)
+  1. WhatsApp: cambia 580000000000 por tu número con código de país, sin + ni espacios.
+     Ejemplo: 584141234567
+  2. Número visible: cambia "+58 000 000 0000" por tu número escrito como quieras.
+  3. Foto de portada: reemplaza el archivo foto-portada.jpg por otra foto con el mismo nombre.
+  4. Logo: reemplaza el archivo logo.png por tu logo con el mismo nombre.
+  5. Redes: cambia los enlaces que empiezan con https:// en la sección "Síguenos".
+  6. Colores: están al inicio del código, en :root (--yellow, --blue, --red).
+  Deja logo.png y foto-portada.jpg en la misma carpeta que este archivo index.html.
+-->
+<main class="wrap">
+  <header>
+    <div class="hero">
+      <img class="photo" alt="Trabuco Gaitero cantando en vivo durante un show nocturno" src="https://res.cloudinary.com/dt4kgs8ge/image/upload/v1794074720/tphuxfaf9x0lcabvf7to.jpg">
+      <div class="live"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>En vivo</div>
+    </div>
+    <div class="id">
+      <img class="logo" alt="Logo de Trabuco Gaitero" width="112" height="112" src="https://res.cloudinary.com/dt4kgs8ge/image/upload/v1794074816/wndaitmid5rawbwjwxpb.png">
+      <p class="kind">Agrupación de gaita</p>
+      <h1><span>Trabuco</span><span>Gaitero</span></h1>
+      <p class="tag">La gaita más potente de Venezuela</p>
+      <p class="sub">Garantía de un show profesional, vibrante y lleno de tradición.</p>
+      <div class="stripe" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+  </header>
+
+  <section class="contact" aria-label="Contratación">
+    <!-- WHATSAPP: cambia 584244509588 por tu número -->
+    <a class="cta" href="https://wa.me/584244509588" target="_blank" rel="noopener">Contrata tu show por WhatsApp <span aria-hidden="true">→</span></a>
+    <div class="number">
+      <!-- Número que se ve en pantalla (también es el que se copia) -->
+      <span id="phone">+58 4244 509 588</span>
+      <button class="copy" id="copyBtn" type="button">Copiar</button>
+    </div>
+  </section>
+
+  <section aria-label="Videos">
+    <h2>Míranos</h2>
+    <a class="videos" href="https://www.instagram.com/eltrabucogaitero/reels/" target="_blank" rel="noopener">
+      <span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.5v17l15-8.5z"/></svg></span>
+      <span class="t"><b>Videos de nuestros shows</b><small>Reels en Instagram</small></span>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <section aria-label="Redes sociales">
+    <h2>Síguenos</h2>
+    <p class="handle"><b>@eltrabucogaitero</b> en todas las redes</p>
+    <div class="socials">
+      <a class="social ig" href="https://www.instagram.com/eltrabucogaitero/" target="_blank" rel="noopener"><img class="chip-img" src="https://res.cloudinary.com/dt4kgs8ge/image/upload/v1794075231/c2uh8nvhesx7b8vihqxc.png" alt="" width="52" height="52">Instagram</a>
+      <a class="social tt" href="https://www.tiktok.com/@eltrabucogaitero" target="_blank" rel="noopener"><img class="chip-img" src="https://res.cloudinary.com/dt4kgs8ge/image/upload/v1794075507/h8epmnzo9q7qojkxc5cn.png" alt="" width="52" height="52">TikTok</a>
+      <a class="social fb" href="https://www.facebook.com/eltrabucogaitero" target="_blank" rel="noopener"><img class="chip-img" src="https://res.cloudinary.com/dt4kgs8ge/image/upload/v1794075760/j0ia0d0rejr1dxgelrxr.png" alt="" width="52" height="52">Facebook</a>
+    </div>
+  </section>
+
+  <footer>Copyright @gabox_Lopez</footer>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById('copyBtn');
+  var phone = document.getElementById('phone');
+  function selectPhone() {
+    var r = document.createRange();
+    r.selectNodeContents(phone);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+  }
+  btn.addEventListener('click', function () {
+    var text = phone.textContent.trim();
+    function done(ok) {
+      if (!ok) selectPhone();
+      btn.textContent = ok ? 'Copiado' : 'Selecciona y copia';
+      setTimeout(function () { btn.textContent = 'Copiar'; }, 2000);
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+    } catch (e) { done(false); }
+  });
+})();
+</script>
+<script>
+/* FOTOS DE LA PORTADA
+   1. Crea una carpeta llamada img junto a este index.html.
+   2. Guarda ahí tus fotos y escribe sus nombres en la lista de abajo.
+   3. La foto que ya está en la portada se muestra primero y luego pasan estas.
+   Si una foto de la lista no existe, se salta sola (en la consola del navegador, F12, avisa cuál falta).
+   INTERVALO es el tiempo entre fotos, en milisegundos (3000 = 3 segundos). */
+(function () {
+  var FOTOS = [
+    "img/foto1.jpeg",
+    "img/foto2.jpeg",
+    "img/foto3.jpeg",
+    "img/foto4.jpeg"
+    "img/foto5.jpeg",
+    "img/foto6.jpeg",
+    "img/foto7.jpeg",
+    "img/foto8.jpeg",
+    "img/foto9.jpeg",
+    "img/foto10.jpeg",
+    "img/foto11.jpeg",
+
+  ];
+  var INTERVALO = 3000;
+
+  var hero = document.querySelector('.hero');
+  var live = hero.querySelector('.live');
+  var slides = [];
+  var actual = 0;
+  var timer = null;
+
+  FOTOS.forEach(function (src, i) {
+    var im = new Image();
+    im.onload = function () { agregar(src, i); };
+    im.onerror = function () { console.warn('No se encontró la foto: ' + src); };
+    im.src = src;
+  });
+
+  function agregar(src, orden) {
+    var el = document.createElement('img');
+    el.className = 'slide';
+    el.alt = '';
+    el.src = src;
+    el.setAttribute('data-orden', orden);
+    hero.insertBefore(el, live);
+    slides.push(el);
+    slides.sort(function (a, b) {
+      return a.getAttribute('data-orden') - b.getAttribute('data-orden');
+    });
+    if (!timer) timer = setInterval(avanzar, INTERVALO);
+  }
+
+  function avanzar() {
+    var total = slides.length + 1;
+    actual = (actual + 1) % total;
+    if (actual === 0) {
+      slides.forEach(function (s) { s.classList.remove('on'); });
+      return;
+    }
+    var nueva = slides[actual - 1];
+    slides.forEach(function (s) { s.style.zIndex = 0; });
+    nueva.style.zIndex = 1;
+    nueva.classList.add('on');
+    setTimeout(function () {
+      slides.forEach(function (s) { if (s !== nueva) s.classList.remove('on'); });
+    }, 1000);
+  }
+})();
+</script>
+</body>
+</html>
